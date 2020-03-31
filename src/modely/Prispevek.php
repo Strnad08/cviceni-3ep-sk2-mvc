@@ -17,7 +17,7 @@ class Prispevek
     {
         $spojeni = DB::pripojit();
 
-        $dotaz = "INSERT INTO 3ep_sk2_php_mvc_prispevky (nadpis, obsah) VALUES ('$nadpis', '$obsah')";
+        $dotaz = "INSERT INTO mvc_prispevky (nadpis, obsah) VALUES ('$nadpis', '$obsah')";
         $vysledek = mysqli_query($spojeni, $dotaz);
 
         if($vysledek)
@@ -30,7 +30,7 @@ class Prispevek
     {
         $spojeni = DB::pripojit();
 
-        $dotaz = "SELECT * FROM 3ep_sk2_php_mvc_prispevky WHERE id = '$id'";
+        $dotaz = "SELECT * FROM mvc_prispevky WHERE id = '$id'";
         $vysledek = mysqli_query($spojeni, $dotaz);
         
         if(mysqli_num_rows($vysledek))
@@ -53,7 +53,7 @@ class Prispevek
     {
         $spojeni = DB::pripojit();
 
-        $dotaz = "SELECT * FROM 3ep_sk2_php_mvc_prispevky";
+        $dotaz = "SELECT * FROM mvc_prispevky";
         $vysledek = mysqli_query($spojeni, $dotaz);
 
         $prispevky = [];
@@ -69,4 +69,21 @@ class Prispevek
 
         return $prispevky;
     }
+    static public function smazat($id)
+    {
+        $spojeni = DB::pripojit();
+        $id = $_GET['id'];
+        $dotaz = "DELETE FROM `mvc_prispevky` WHERE id = '$id'";
+        $vysledek = mysqli_query($spojeni, $dotaz);
+        header("location:index.php?c=prispevky&a=prehled");
+    }
+    static public function edit($id,$nadpis,$obsah)
+    {
+        
+        $spojeni = DB::pripojit();
+        $dotaz = "UPDATE `mvc_prispevky` SET `nadpis` = '$nadpis', `obsah` = '$obsah' WHERE id = '$id'";
+        $vysledek = mysqli_query($spojeni, $dotaz);
+        header("location:index.php?c=prispevky&a=prehled");
+    }
+    
 }

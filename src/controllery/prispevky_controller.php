@@ -2,6 +2,7 @@
 
 class PrispevkyController
 {
+
     public function pridani()
     {
         require_once "viewy/prispevky/pridani.php";
@@ -41,5 +42,24 @@ class PrispevkyController
         $prispevky = Prispevek::nacistVsechny();
 
         require_once "viewy/prispevky/prehled.php";
+    }
+    public function smazat()
+    {
+        $id = $_GET["id"];
+        $prispevek = Prispevek::smazat($id);
+        
+    }
+    public function edit()
+    {   
+        require_once "viewy/prispevky/edit.php";
+        $idE = $_GET["id"];
+        $_SESSION["idE"] = $idE;
+    }
+    public function editace()
+    {
+        $id = $_SESSION["idE"];
+        $nadpis = trim($_POST["nadpis"]);
+        $obsah = trim($_POST["obsah"]);
+        $prispevek = Prispevek::edit($id,$nadpis,$obsah);
     }
 }
